@@ -2,7 +2,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/
 import app from "../../firebase/firebase.init";
 import { useState } from "react";
 const Login = () => {
-    const [saveUser, setSaveUser] = useState([])
+    const [saveUser, setSaveUser] = useState(null)
     const auth = getAuth(app);
     // console.log(auth);
     const provider = new GoogleAuthProvider();
@@ -32,8 +32,11 @@ const Login = () => {
 
     return (
         <div>
-            <button onClick={handleGoogleSignIn}>Login</button>
-            <button onClick={handleGoogleLogOut}>LogOut</button>
+            {
+                saveUser ?
+                    <button onClick={handleGoogleLogOut}>LogOut</button> :
+                    <button onClick={handleGoogleSignIn}>Login</button>
+            }
             {
                 saveUser && <div>
                     <h2>User: {saveUser.displayName}</h2>
